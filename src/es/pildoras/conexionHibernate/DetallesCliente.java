@@ -48,7 +48,7 @@ public class DetallesCliente {
 		super();
 	}
 	
-	public DetallesCliente(String nombre, String apellido, String direccion) {
+	public DetallesCliente(String web, String tfno, String comentarios) {
 		super();
 		this.web = web;
 		this.tfno = tfno;

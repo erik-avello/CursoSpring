@@ -19,6 +19,10 @@ public class Cliente {
 	@Column(name="direccion")
 	private String direccion;
 	
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="id")
+	private DetallesCliente detallesCliente;
+	
 	public int getId() {
 		return id;
 	}
@@ -61,8 +65,11 @@ public class Cliente {
 				+ "]";
 	}
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="id")
-	private DetallesCliente detallesCliente;
-	
+	public DetallesCliente getDetallesCliente() {
+		return detallesCliente;
+	}
+	public void setDetallesCliente(DetallesCliente detallesCliente) {
+		this.detallesCliente = detallesCliente;
+	}
+
 }
