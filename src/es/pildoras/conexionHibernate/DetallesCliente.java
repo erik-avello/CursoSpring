@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class DetallesCliente {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private int id;
 	
@@ -19,6 +20,16 @@ public class DetallesCliente {
 	@Column(name="comentarios")
 	private String comentarios;
 	
+	//Dando bi dirección en BD
+	@OneToOne(mappedBy="detallesCliente")
+	private Cliente cliente;
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 	public int getId() {
 		return id;
 	}
@@ -54,6 +65,11 @@ public class DetallesCliente {
 		this.tfno = tfno;
 		this.comentarios = comentarios;
 	}
+	@Override
+	public String toString() {
+		return "DetallesCliente [id=" + id + ", web=" + web + ", tfno=" + tfno + ", comentarios=" + comentarios + "]";
+	}
 
+	
 	
 }

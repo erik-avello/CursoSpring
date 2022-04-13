@@ -1,10 +1,13 @@
 package es.pildoras.conexionHibernate;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class InsertaCliente {
+public class ObtenerPedidosCliente {
 
 	public static void main(String[] args) {
 
@@ -16,21 +19,21 @@ public class InsertaCliente {
 		Session miSession = miFactory.openSession();
 		
 		try {
-			Cliente cliente = new Cliente("Ana","Marin","Santiago");
-			DetallesCliente detalle = new DetallesCliente("Twitter","2222","buena página");
+			//Obtener el cliente de la tabla cliente de la bd
+			Cliente cliente = miSession.get(Cliente.class, 2);
 			
-			//Asociar los objetos 
-			cliente.setDetallesCliente(detalle);
-			
-			//Esto guarda la información de dos tablas relacionadas
+			System.out.println("Cliente: "+cliente);
+			System.out.println("Pedidos del cliente: "+cliente.getPedidos());
 			
 			miSession.beginTransaction();
-			miSession.save(cliente);
+			
 			miSession.getTransaction().commit();
-			System.out.println("Registro insertado correctamente!");
 			miSession.close();
 			
-		} finally{
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}finally{
 			miFactory.close();
 		}
 		

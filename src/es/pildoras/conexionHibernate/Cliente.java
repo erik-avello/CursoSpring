@@ -1,5 +1,8 @@
 package es.pildoras.conexionHibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,6 +25,11 @@ public class Cliente {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="id")
 	private DetallesCliente detallesCliente;
+	
+	//Aquí se utiliza el tipo list porque ahí se van a almacenar los datos
+	//Ya que se necesita almacenar varios
+	@OneToMany(mappedBy="cliente", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+	private List<Pedido> pedidos;
 	
 	public int getId() {
 		return id;
@@ -61,10 +69,24 @@ public class Cliente {
 
 	@Override
 	public String toString() {
-		return "Clientes [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion
-				+ "]";
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", direccion=" + direccion + "]";
 	}
 	
+	public void agregarPedido(Pedido pedido) {
+		if(pedidos != null) {
+			pedidos = new ArrayList<>();
+			pedidos.add(pedido);
+			
+			pedido.setCliente(this);
+		}
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 	public DetallesCliente getDetallesCliente() {
 		return detallesCliente;
 	}
